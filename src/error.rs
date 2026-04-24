@@ -1,7 +1,7 @@
 pub use derive_getters::Getters;
 pub use orion_error::UvsFrom as UvsConfFrom;
-use orion_error::{ErrorCode, UvsReason};
-pub use orion_error::{ErrorOwe, ErrorWith, StructError, UvsFrom};
+use orion_error::{DomainReason, ErrorCode, UvsReason};
+pub use orion_error::{compat_traits::ErrorOwe, ErrorWith, StructError, UvsFrom};
 pub use serde_derive::{Deserialize, Serialize};
 use thiserror::Error;
 
@@ -16,6 +16,8 @@ pub enum ConfIOReason {
     #[error("no format feature enabled - please enable at least one of: yaml, toml, json, ini")]
     NoFormatEnabled,
 }
+
+impl DomainReason for ConfIOReason {}
 
 // Keep legacy alias for compatibility
 pub type SerdeReason = ConfIOReason;

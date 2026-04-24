@@ -1,7 +1,7 @@
 pub use derive_getters::Getters;
 pub use orion_error::UvsFrom as UvsConfFrom;
-use orion_error::{ContextRecord, OperationContext, ToStructError};
-pub use orion_error::{ErrorOwe, ErrorWith, StructError, UvsFrom};
+use orion_error::{runtime::ContextRecord, traits_ext::ToStructError, OperationContext};
+pub use orion_error::{compat_traits::ErrorOwe, ErrorWith, StructError, UvsFrom};
 use orion_variate::EnvChecker;
 #[allow(unused_imports)]
 use orion_variate::{EnvDict, EnvEvaluable};
@@ -17,12 +17,12 @@ where
     F: FnOnce(&str) -> Result<T, Box<dyn std::error::Error>>,
 {
     let mut ctx =
-        OperationContext::want(format!("load object from {operation_name}")).with_auto_log();
+        OperationContext::doing(format!("load object from {operation_name}")).with_auto_log();
     ctx.record("from path", path);
-    let file_content = fs::read_to_string(path).owe_res().with(&ctx)?;
+    let file_content = fs::read_to_string(path).owe_res().with_context(&ctx)?;
     let loaded: T = deserializer(file_content.as_str())
         .map_err(|e| ConfIOReason::from(e.to_string()).to_err())
-        .with(&ctx)?;
+        .with_context(&ctx)?;
     ctx.mark_suc();
     Ok(loaded)
 }
@@ -32,12 +32,12 @@ fn save_to_file<F>(path: &Path, operation_name: &str, serializer: F) -> OrionCon
 where
     F: FnOnce() -> Result<String, Box<dyn std::error::Error>>,
 {
-    let mut ctx = OperationContext::want(format!("save {operation_name}")).with_auto_log();
+    let mut ctx = OperationContext::doing(format!("save {operation_name}")).with_auto_log();
     ctx.record("from path", path);
     let data_content = serializer()
         .map_err(|e| ConfIOReason::from(e.to_string()).to_err())
-        .with(&ctx)?;
-    fs::write(path, data_content).owe_res().with(&ctx)?;
+        .with_context(&ctx)?;
+    fs::write(path, data_content).owe_res().with_context(&ctx)?;
     ctx.mark_suc();
     Ok(())
 }
@@ -54,7 +54,7 @@ where
     F: FnOnce(&str) -> Result<T, E>,
     E: Display,
 {
-    let mut ctx = OperationContext::want(format!("load object from {operation_name} env string"))
+    let mut ctx = OperationContext::doing(format!("load object from {operation_name} env string"))
         .with_auto_log();
     ctx.record("source", "inline content");
     let evaluated = content.to_string().env_eval(dict);
@@ -65,7 +65,7 @@ where
     }
     let loaded = deserializer(&evaluated)
         .map_err(|e| ConfIOReason::from(e.to_string()).to_err())
-        .with(&ctx)?;
+        .with_context(&ctx)?;
     ctx.mark_suc();
     Ok(loaded)
 }
@@ -83,11 +83,11 @@ where
     E: Display,
 {
     let mut ctx =
-        OperationContext::want(format!("load object from {operation_name} file with env"))
+        OperationContext::doing(format!("load object from {operation_name} file with env"))
             .with_auto_log();
     ctx.record("from path", path);
 
-    let file_content = fs::read_to_string(path).owe_res().with(&ctx)?;
+    let file_content = fs::read_to_string(path).owe_res().with_context(&ctx)?;
     let evaluated = file_content.env_eval(dict);
 
     if evaluated.needs_env_eval() {
@@ -98,7 +98,7 @@ where
 
     let loaded = deserializer(&evaluated)
         .map_err(|e| ConfIOReason::from(e.to_string()).to_err())
-        .with(&ctx)?;
+        .with_context(&ctx)?;
 
     ctx.mark_suc();
     Ok(loaded)

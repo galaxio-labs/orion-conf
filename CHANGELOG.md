@@ -4,17 +4,25 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.6.0 - 2026-04-24
+
 ### Changed
 - Updated dependencies:
-  - `orion-error` from `0.5` to `0.6`
-  - `orion-variate` from `>=0.10.8, <0.11` to `0.11`
+  - `orion-error` from `0.6` to `0.7`
+  - `orion-variate` from `0.11` to `0.12`
 - Migrated re-exports from removed `UvsConfFrom` to `UvsFrom` while keeping a compatibility alias (`UvsConfFrom`)
+- `ConfIOReason` now explicitly implements `DomainReason` to satisfy `orion-error 0.7` `StructError<R>` bounds
+- Persistence helpers migrated from deprecated context APIs `want()` / `with()` to `doing()` / `with_context()`
+- `ContextRecord`, `ToStructError`, and legacy `ErrorOwe` imports were moved to the `0.7` namespace layout:
+  - `orion_error::runtime::ContextRecord`
+  - `orion_error::traits_ext::ToStructError`
+  - `orion_error::compat_traits::ErrorOwe`
 
 ### Fixed
-- Fixed compile errors caused by `orion-error 0.6` API changes:
-  - Replaced `ConfIOReason::from_conf(e.to_string())` with `ConfIOReason::from(e.to_string())` in persistence helpers
-  - Updated imports in `src/error.rs`, `src/persist.rs`, and `src/traits.rs`
+- Fixed compile errors caused by `orion-error 0.7` API changes in `src/error.rs`, `src/persist.rs`, and `src/traits.rs`
+- Restored compatibility of `to_err()`, `owe_res()`, and `ctx.record(...)` call sites under the new `orion-error` module layout
 - Fixed clippy `print_literal` warnings in `examples/test_multiline_json.rs` so strict `-D warnings` passes
+- Verified `cargo test` passes after the upgrade
 
 ## 0.4.2 - 2026-01-11
 
