@@ -1,7 +1,7 @@
 pub use derive_getters::Getters;
 pub use orion_error::UvsFrom as UvsConfFrom;
 use orion_error::{DomainReason, ErrorCode, UvsReason};
-pub use orion_error::{compat_traits::ErrorOwe, ErrorWith, StructError, UvsFrom};
+pub use orion_error::{ErrorWith, StructError, UvsFrom, compat_traits::ErrorOwe};
 pub use serde_derive::{Deserialize, Serialize};
 use thiserror::Error;
 

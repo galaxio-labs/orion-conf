@@ -1,6 +1,8 @@
 pub use derive_getters::Getters;
 pub use orion_error::UvsFrom as UvsConfFrom;
-pub use orion_error::{compat_traits::ErrorOwe, ErrorWith, StructError, traits_ext::ToStructError, UvsFrom};
+pub use orion_error::{
+    ErrorWith, StructError, UvsFrom, compat_traits::ErrorOwe, traits_ext::ToStructError,
+};
 use orion_variate::EnvDict;
 pub use serde_derive::{Deserialize, Serialize};
 use std::path::Path;
