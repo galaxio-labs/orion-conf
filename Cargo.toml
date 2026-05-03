@@ -2,7 +2,7 @@
 name = "orion_conf"
 authors = ["wukong<sec-wukong@outlook.com>"]
 edition = "2024"
-version = "0.7.0" #@gxl:set(version)
+version = "0.7.1" #@gxl:set(version)
 description = "conf storage"
 license = "MIT"
 repository = "https://github.com/galaxy-sec/orion-conf"
