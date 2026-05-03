@@ -1,36 +1,24 @@
 pub use derive_getters::Getters;
-pub use orion_error::UvsFrom as UvsConfFrom;
-use orion_error::{DomainReason, ErrorCode, UvsReason};
-pub use orion_error::{ErrorWith, StructError, UvsFrom, compat_traits::ErrorOwe};
+use orion_error::OrionError;
+pub use orion_error::StructError;
+use orion_error::UnifiedReason;
+pub use orion_error::conversion::ErrorWith;
 pub use serde_derive::{Deserialize, Serialize};
-use thiserror::Error;
 
-#[derive(Clone, Debug, Serialize, PartialEq, Error)]
+#[derive(Clone, Debug, Serialize, PartialEq, OrionError)]
 pub enum ConfIOReason {
-    // Preferred variant for arbitrary messages
-    #[error("{0}")]
+    #[orion_error(identity = "conf.other")]
     Other(String),
 
-    #[error("{0}")]
-    Uvs(UvsReason),
-    #[error("no format feature enabled - please enable at least one of: yaml, toml, json, ini")]
+    #[orion_error(identity = "conf.no_format_enabled")]
     NoFormatEnabled,
-}
 
-impl DomainReason for ConfIOReason {}
+    #[orion_error(transparent)]
+    General(UnifiedReason),
+}
 
 // Keep legacy alias for compatibility
 pub type SerdeReason = ConfIOReason;
-
-impl ErrorCode for ConfIOReason {
-    fn error_code(&self) -> i32 {
-        match self {
-            ConfIOReason::Other(_) => 500,
-            ConfIOReason::Uvs(r) => r.error_code(),
-            ConfIOReason::NoFormatEnabled => 501,
-        }
-    }
-}
 
 impl From<String> for ConfIOReason {
     fn from(s: String) -> Self {
@@ -38,9 +26,9 @@ impl From<String> for ConfIOReason {
     }
 }
 
-impl From<UvsReason> for ConfIOReason {
-    fn from(r: UvsReason) -> Self {
-        ConfIOReason::Uvs(r)
+impl From<UnifiedReason> for ConfIOReason {
+    fn from(r: UnifiedReason) -> Self {
+        ConfIOReason::General(r)
     }
 }
 

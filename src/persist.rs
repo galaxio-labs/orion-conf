@@ -1,7 +1,7 @@
 pub use derive_getters::Getters;
-pub use orion_error::UvsFrom as UvsConfFrom;
-pub use orion_error::{ErrorWith, StructError, UvsFrom, compat_traits::ErrorOwe};
-use orion_error::{OperationContext, runtime::ContextRecord, traits_ext::ToStructError};
+use orion_error::OperationContext;
+use orion_error::conversion::ToStructError;
+use orion_error::prelude::*;
 use orion_variate::EnvChecker;
 #[allow(unused_imports)]
 use orion_variate::{EnvDict, EnvEvaluable};
@@ -18,8 +18,10 @@ where
 {
     let mut ctx =
         OperationContext::doing(format!("load object from {operation_name}")).with_auto_log();
-    ctx.record("from path", path);
-    let file_content = fs::read_to_string(path).owe_res().with_context(&ctx)?;
+    ctx.record("from path", path.display().to_string());
+    let file_content = fs::read_to_string(path)
+        .source_err(ConfIOReason::system_error(), "read file")
+        .with_context(&ctx)?;
     let loaded: T = deserializer(file_content.as_str())
         .map_err(|e| ConfIOReason::from(e.to_string()).to_err())
         .with_context(&ctx)?;
@@ -33,11 +35,13 @@ where
     F: FnOnce() -> Result<String, Box<dyn std::error::Error>>,
 {
     let mut ctx = OperationContext::doing(format!("save {operation_name}")).with_auto_log();
-    ctx.record("from path", path);
+    ctx.record("from path", path.display().to_string());
     let data_content = serializer()
         .map_err(|e| ConfIOReason::from(e.to_string()).to_err())
         .with_context(&ctx)?;
-    fs::write(path, data_content).owe_res().with_context(&ctx)?;
+    fs::write(path, data_content)
+        .source_err(ConfIOReason::system_error(), "write file")
+        .with_context(&ctx)?;
     ctx.mark_suc();
     Ok(())
 }
@@ -85,9 +89,11 @@ where
     let mut ctx =
         OperationContext::doing(format!("load object from {operation_name} file with env"))
             .with_auto_log();
-    ctx.record("from path", path);
+    ctx.record("from path", path.display().to_string());
 
-    let file_content = fs::read_to_string(path).owe_res().with_context(&ctx)?;
+    let file_content = fs::read_to_string(path)
+        .source_err(ConfIOReason::system_error(), "read file")
+        .with_context(&ctx)?;
     let evaluated = file_content.env_eval(dict);
 
     if evaluated.needs_env_eval() {
