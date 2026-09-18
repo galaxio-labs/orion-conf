@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.7.2 - 2026-09-18
+
+### Changed
+- Use explicit `orion_error::conversion::{ErrorWith, SourceErr}` imports instead of the `orion_error::prelude::*` glob in `src/persist.rs`.
+- Report coverage to Coveralls instead of Codecov.
+- `Cargo.toml` `repository` corrected from `galaxy-sec` to `galaxio-labs`; the CI badge now uses the non-deprecated `actions/workflows/<file>` form.
+- `LICENSE` copyright holder updated from `galaxy-sec` to `galaxio-labs`.
+
+### Added
+- README: crate badges for downloads, docs.rs, dependency status, license, edition and stars.
+
 ## 0.7.0 - 2026-05-03
 
 ### Changed

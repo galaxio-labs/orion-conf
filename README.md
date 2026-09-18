@@ -2,6 +2,12 @@
 [![CI](https://github.com/galaxio-labs/orion-conf/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/galaxio-labs/orion-conf/actions)
 [![Coverage Status](https://coveralls.io/repos/github/galaxio-labs/orion-conf/badge.svg?branch=main)](https://coveralls.io/github/galaxio-labs/orion-conf?branch=main)
 [![crates.io](https://img.shields.io/crates/v/orion-conf.svg)](https://crates.io/crates/orion-conf)
+[![Downloads](https://img.shields.io/crates/d/orion-conf.svg)](https://crates.io/crates/orion-conf)
+[![docs.rs](https://docs.rs/orion_conf/badge.svg)](https://docs.rs/orion_conf)
+[![Dependencies](https://deps.rs/repo/github/galaxio-labs/orion-conf/status.svg)](https://deps.rs/repo/github/galaxio-labs/orion-conf)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![Rust 2024 edition](https://img.shields.io/badge/Rust-2024-orange.svg)](https://www.rust-lang.org)
+[![GitHub stars](https://img.shields.io/github/stars/galaxio-labs/orion-conf.svg)](https://github.com/galaxio-labs/orion-conf/stargazers)
 
 Lightweight, feature‑gated config IO for Rust. Enable only the formats you need.
 

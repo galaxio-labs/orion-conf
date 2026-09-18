@@ -1,7 +1,6 @@
 pub use derive_getters::Getters;
 use orion_error::OperationContext;
-use orion_error::conversion::ToStructError;
-use orion_error::prelude::*;
+use orion_error::conversion::{ErrorWith, SourceErr, ToStructError};
 use orion_variate::EnvChecker;
 #[allow(unused_imports)]
 use orion_variate::{EnvDict, EnvEvaluable};
