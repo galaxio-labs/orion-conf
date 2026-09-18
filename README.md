@@ -1,6 +1,6 @@
 # orion-conf
 [![CI](https://github.com/galaxy-sec/orion-conf/workflows/CI/badge.svg)](https://github.com/galaxy-sec/orion-conf/actions)
-[![Coverage Status](https://codecov.io/gh/galaxy-sec/orion-conf/branch/main/graph/badge.svg)](https://codecov.io/gh/galaxy-sec/orion-conf)
+[![Coverage Status](https://coveralls.io/repos/github/galaxio-labs/orion-conf/badge.svg?branch=main)](https://coveralls.io/github/galaxio-labs/orion-conf?branch=main)
 [![crates.io](https://img.shields.io/crates/v/orion-conf.svg)](https://crates.io/crates/orion-conf)
 
 Lightweight, feature‑gated config IO for Rust. Enable only the formats you need.
