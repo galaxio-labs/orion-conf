@@ -5,7 +5,7 @@ edition = "2024"
 version = "0.7.1" #@gxl:set(version)
 description = "conf storage"
 license = "MIT"
-repository = "https://github.com/galaxy-sec/orion-conf"
+repository = "https://github.com/galaxio-labs/orion-conf"
 keywords = ["format", "utilities"]
 categories = ["command-line-utilities"]
 

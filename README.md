@@ -1,5 +1,5 @@
 # orion-conf
-[![CI](https://github.com/galaxy-sec/orion-conf/workflows/CI/badge.svg)](https://github.com/galaxy-sec/orion-conf/actions)
+[![CI](https://github.com/galaxio-labs/orion-conf/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/galaxio-labs/orion-conf/actions)
 [![Coverage Status](https://coveralls.io/repos/github/galaxio-labs/orion-conf/badge.svg?branch=main)](https://coveralls.io/github/galaxio-labs/orion-conf?branch=main)
 [![crates.io](https://img.shields.io/crates/v/orion-conf.svg)](https://crates.io/crates/orion-conf)
 
