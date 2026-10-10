@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.8.0 - 2026-10-10
+
+### Changed
+- `orion-error` from `0.8` to `0.9`（操作日志拆分为纯数据 `OperationContext` 与非 `Clone` 的 `AutoLogGuard`；附上下文 / 克隆不再重复或延迟日志）。
+- `orion-variate` from `0.13` to `0.14`（对齐 `orion-error 0.9`，避免同一依赖图出现两份 `orion-error`）。
+
 ## 0.7.2 - 2026-09-18
 
 ### Changed
